@@ -26,7 +26,7 @@ class ShelterController extends Controller
     }
 
     /**
-     * Show shelter by us_key
+     * Show shelter by uskey
      *
      * @param string $shelterUsKey
      * @return ShelterInfoPresenter|\Illuminate\Http\JsonResponse

@@ -20,11 +20,9 @@ class Worker extends Model
         'age'
     ];
 
-    protected $guarded = [
-
-    ];
-
     /**
+     * Get worker cats
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function cats()
@@ -32,6 +30,11 @@ class Worker extends Model
         return $this->hasMany('App\Cat');
     }
 
+    /**
+     * Get worker shelter
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public  function shelter()
     {
         return $this->belongsTo('App\Shelter', 'shelter_id');

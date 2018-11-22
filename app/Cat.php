@@ -21,10 +21,6 @@ class Cat extends Model
         'color'
     ];
 
-    protected $guarded = [
-
-    ];
-
     /**
      * Get cat guardian
      *
