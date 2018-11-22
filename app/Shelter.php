@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Helpers\USKeyGenerator;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Shelter extends Model
 {
+    use USKeyGenerator;
+
     protected $table = 'shelters';
 
     protected $fillable = [
@@ -31,10 +34,5 @@ class Shelter extends Model
     public function cats()
     {
         return $this->hasMany('App\Cat');
-    }
-
-    public static function generateUSKey()
-    {
-        return str_random(5);
     }
 }

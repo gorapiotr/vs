@@ -1,68 +1,72 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+# Shelter app
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+### Routing app list
+````
++--------+----------+----------------------+------+----------------------------------------------+------------+
+| Domain | Method   | URI                  | Name | Action                                       | Middleware |
++--------+----------+----------------------+------+----------------------------------------------+------------+
+|        | GET|HEAD | api/cats             |      | App\Http\Controllers\CatController@index     | api        |
+|        | GET|HEAD | api/cats/{id}        |      | App\Http\Controllers\CatController@show      | api        |
+|        | GET|HEAD | api/shelters         |      | App\Http\Controllers\ShelterController@index | api        |
+|        | GET|HEAD | api/shelters/{uskey} |      | App\Http\Controllers\ShelterController@show  | api        |
++--------+----------+----------------------+------+----------------------------------------------+------------+
+````
 
-## About Laravel
+### Database config
+````
+DB_CONNECTION=mysql
+DB_HOST=database
+DB_PORT=3306
+DB_DATABASE=test
+DB_USERNAME=root
+DB_PASSWORD=test
+````
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+### Docker for app
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of any modern web application framework, making it a breeze to get started learning the framework.
-
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell):
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+[Link for docker .zip](https://github.com/gorapiotr/vs/tree/master/docker/docker.zip)
+````
+version: "3"
+services:
+    web:
+        image: nginx:latest
+        container_name: vs_nginx
+        ports:
+            - "80:80"
+        volumes:
+            - ./src:/code
+            - ./nginx/site.conf:/etc/nginx/conf.d/default.conf
+    php:
+        build: ./php
+        container_name: vs_php
+        ports:
+            - "9000:9000"
+        working_dir: /code
+        volumes:
+            - ./src:/code
+            - ./php/custom.ini:/usr/local/etc/php/conf.d/zzzzz-php.ini
+    redis_db:
+        image: redis:latest
+        container_name: vs_redis_db
+        ports:
+            - "6379:6379"
+        expose:
+            - 6379
+        volumes:
+            - ./data/redis:/data
+    database:
+        image: mysql:5.7.22
+        container_name: vs_mysql_db
+        expose:
+            - 3306
+        ports:
+            - "3306:3306"
+        environment:
+            - MYSQL_ROOT_PASSWORD=test
+            - MYSQL_DATABASE=test
+        volumes:
+            - ./data/db:/var/lib/mysql
+networks:
+    app:
+        driver: "bridge"
+````
