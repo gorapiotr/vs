@@ -26,11 +26,21 @@ class Shelter extends Model
         'size'
     ];
 
+    /**
+     * Get all shelter workers
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function workers()
     {
         return $this->hasMany('App\Worker');
     }
 
+    /**
+     * Get all shelter cats
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function cats()
     {
         return $this->hasMany('App\Cat');

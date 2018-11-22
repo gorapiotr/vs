@@ -26,6 +26,8 @@ class Cat extends Model
     ];
 
     /**
+     * Get cat guardian
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function guardian()
@@ -33,6 +35,11 @@ class Cat extends Model
         return $this->belongsTo('App\Worker', 'worker_id');
     }
 
+    /**
+     * Get cat shelter
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public  function shelter()
     {
         return $this->belongsTo('App\Shelter', 'shelter_id');

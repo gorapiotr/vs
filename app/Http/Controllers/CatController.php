@@ -8,6 +8,11 @@ use App\Presenter\CatInfoPresenter;
 
 class CatController extends Controller
 {
+    /**
+     * Get list all cats in database
+     *
+     * @return CatCollectionPresenter|\Illuminate\Http\JsonResponse
+     */
     public function index()
     {
         $cats = Cat::all();
@@ -19,6 +24,12 @@ class CatController extends Controller
         }
     }
 
+    /**
+     * Show cat by $id
+     *
+     * @param int $catId
+     * @return CatInfoPresenter|\Illuminate\Http\JsonResponse
+     */
     public function show(int $catId)
     {
         /** @var Cat $cat */

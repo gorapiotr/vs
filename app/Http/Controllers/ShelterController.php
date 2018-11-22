@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class ShelterController extends Controller
 {
+    /**
+     * Get all shelter in database
+     *
+     * @return ShelterCollectionPresenter|\Illuminate\Http\JsonResponse
+     */
     public function index()
     {
         $shelters = Shelter::orderBy('name', 'asc')->get();
@@ -20,6 +25,12 @@ class ShelterController extends Controller
         }
     }
 
+    /**
+     * Show shelter by us_key
+     *
+     * @param string $shelterUsKey
+     * @return ShelterInfoPresenter|\Illuminate\Http\JsonResponse
+     */
     public function show(string $shelterUsKey)
     {
         /** @var Shelter $shelter */
