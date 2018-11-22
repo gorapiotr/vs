@@ -14,7 +14,7 @@
 
 ### Database UML diagram
 
-[logo]:(https://firebasestorage.googleapis.com/v0/b/cmsimage-9ec21.appspot.com/o/Zrzut%20ekranu%202018-11-22%20o%2019.59.47.png?alt=media&token=62c845e5-a333-498c-8873-cac57485d21e)
+![logo](https://firebasestorage.googleapis.com/v0/b/cmsimage-9ec21.appspot.com/o/Zrzut%20ekranu%202018-11-22%20o%2019.59.47.png?alt=media&token=62c845e5-a333-498c-8873-cac57485d21e)
 
 ### Database config
 ````
